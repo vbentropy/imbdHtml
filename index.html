@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IMBD — Licensed In-Home Childcare Agencies</title>
+    <meta
+      name="description"
+      content="Turnkey system to launch licensed in-home childcare agencies across Ontario: licensing, compliance, grants, training, and scalable growth."
+    />
+    <!-- Material Icons (filled) -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg: #0f1115;
+        --panel: #141822;
+        --ink: #e8ebf1;
+        --muted: #9aa3b2;
+        --brand: #5dd0ff;
+        --accent: #9bff7a;
+        --max: 1100px;
+        --radius: 16px;
+        --gap: 18px;
+        --nav-h: 64px;
+        --featuredGlow: 0 14px 40px rgba(114, 255, 211, 0.25);
+        --field: #0f1420;
+        --field-b: #253149;
+        --field-focus: #72ffd3;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font: 16px/1.5 system-ui, Segoe UI, Roboto, Helvetica, Arial;
+        background: var(--bg);
+        color: var(--ink);
+        padding-top: var(--nav-h); /* compensate for fixed nav */
+      }
+      a {
+        color: var(--brand);
+        text-decoration: none;
+      }
+      .wrap {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* NAV (fixed) */
+      .nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        background: rgba(15, 17, 21, 0.75);
+        -webkit-backdrop-filter: saturate(140%) blur(10px);
+        backdrop-filter: saturate(140%) blur(10px);
+        border-bottom: 1px solid #1f2532;
+        z-index: 9999;
+        isolation: isolate;
+        height: var(--nav-h);
+      }
+      .nav .wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+        position: relative;
+        z-index: 10001;
+      }
+      .logo {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
+      .logo svg {
+        width: 24px;
+        height: 24px;
+      }
+      .menu {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .menu a {
+        padding: 8px 10px;
+        border-radius: 10px;
+        color: var(--muted);
+      }
+      .menu a.active,
+      .menu a:hover {
+        color: var(--ink);
+        background: #1a2030;
+      }
+
+      /* Hamburger (hidden on desktop) */
+      .hamburger {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        border: 1px solid #233048;
+        background: #0f1420;
+        color: #e9f1ff;
+        z-index: 10000;
+        touch-action: manipulation;
+        cursor: pointer;
+      }
+      .hamburger svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* Mobile menu panel */
+      .mobile-panel {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: var(--nav-h);
+        background: #0e1420e6;
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid #1f2532;
+        padding: 14px 20px;
+        z-index: 9000;
+        transform: translateY(-10%);
+        opacity: 0;
+        visibility: hidden;
+        transition: transform 0.25s ease, opacity 0.25s ease,
+          visibility 0s 0.25s;
+        display: none;
+        pointer-events: auto;
+      }
+      .mobile-panel.open {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+        transition: transform 0.25s ease, opacity 0.25s ease;
+      }
+      .mobile-panel a {
+        display: block;
+        padding: 12px;
+        border-radius: 12px;
+        color: #d5def0;
+        border: 1px solid #233048;
+        background: #0f1521;
+        margin-bottom: 10px;
+      }
+
+      /* HERO */
+      .hero {
+        padding: 64px 0 48px;
+        position: relative;
+      }
+      .hero h1 {
+        font-size: clamp(28px, 5vw, 44px);
+        line-height: 1.1;
+        margin: 0 0 10px;
+      }
+      .hero p {
+        font-size: clamp(16px, 2.5vw, 18px);
+        color: var(--muted);
+        max-width: 800px;
+      }
+
+      /* Icon/Text chips */
+      .icon-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 18px;
+      }
+      .chip {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        border: 1px solid #253149;
+        background: #101625;
+        border-radius: 999px;
+        padding: 8px 12px;
+        color: #b7c0cf;
+        font-size: 14px;
+      }
+      .chip svg {
+        width: 16px;
+        height: 16px;
+        flex: 0 0 16px;
+      }
+
+      .badges {
+        display: flex;
+        gap: 10px;
+        margin-top: 14px;
+        flex-wrap: wrap;
+      }
+      .badge {
+        font-size: 13px;
+        padding: 6px 10px;
+        border: 1px solid #233048;
+        border-radius: 999px;
+        color: #b8c0cf;
+      }
+      .cta {
+        display: flex;
+        gap: 12px;
+        margin-top: 22px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        padding: 12px 16px;
+        border-radius: 12px;
+        border: 1px solid #233048;
+        background: #162032;
+        color: #e9f1ff;
+        touch-action: manipulation;
+        cursor: pointer;
+      }
+      .btn.primary {
+        background: linear-gradient(90deg, var(--brand), #72ffd3);
+        color: #071218;
+        font-weight: 700;
+        border: none;
+      }
+
+      /* SECTIONS */
+      section {
+        scroll-margin-top: calc(var(--nav-h) + 20px);
+        padding: 56px 0;
+        border-top: 1px solid #1b2130;
+      }
+      h2 {
+        font-size: clamp(20px, 3.4vw, 28px);
+        margin: 0 0 14px;
+      }
+      .kicker {
+        color: var(--muted);
+        font-size: 14px;
+        margin-bottom: 10px;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+      }
+      .grid {
+        display: grid;
+        gap: var(--gap);
+      }
+      .cols-2 {
+        grid-template-columns: 1.2fr 0.8fr;
+      }
+      .card {
+        background: var(--panel);
+        border: 1px solid #1f2532;
+        border-radius: var(--radius);
+        padding: 18px;
+      }
+      .list {
+        display: grid;
+        gap: 10px;
+      }
+      .list li {
+        list-style: none;
+        padding-left: 26px;
+        position: relative;
+      }
+      .list li:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.45em;
+        width: 10px;
+        height: 10px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, var(--brand), var(--accent));
+      }
+      .mini {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      /* PRODUCT CAROUSEL (How) */
+      .carousel {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius);
+        border: 1px solid #1f2532;
+        background: var(--panel);
+      }
+      .track {
+        display: flex;
+        transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+      }
+      .slide {
+        min-width: 100%;
+        padding: 22px;
+      }
+      .slide h3 {
+        margin: 0 0 8px;
+      }
+      .controls {
+        position: relative;
+        z-index: 1001;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px;
+        border-top: 1px solid #1f2532;
+        background: #131827;
+      }
+      .control-btn {
+        background: #0f1420;
+        border: 1px solid #253149;
+        padding: 10px 12px;
+        border-radius: 10px;
+        color: #dce6ff;
+        cursor: pointer;
+        z-index: 1002;
+        position: relative;
+        pointer-events: auto;
+      }
+      .dots {
+        display: flex;
+        gap: 6px;
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: #2a3347;
+        border: none;
+        cursor: pointer;
+      }
+      .dot.active {
+        background: linear-gradient(90deg, var(--brand), var(--accent));
+      }
+
+      /* PACKAGES */
+      .pkg-wrap {
+        display: grid;
+        gap: var(--gap);
+      }
+      .sub {
+        font-size: small;
+      }
+      @media (min-width: 1024px) {
+        .pkg-row {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: var(--gap);
+        }
+      }
+      @media (max-width: 1023.98px) {
+        .pkg-row {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: var(--gap);
+        }
+      }
+
+      .pkg {
+        position: relative;
+        background: var(--panel);
+        border: 1px solid #1f2532;
+        border-radius: 20px;
+        padding: 20px;
+      }
+      .pkg h3 {
+        margin: 0 0 6px;
+      }
+      .price {
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+        margin: 4px 0 12px;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid #233048;
+        background: #0f1521;
+        color: #b7c0cf;
+        font-size: 26px;
+        font-weight: bold;
+      }
+
+      /* Featured (center) */
+      .pkg.featured {
+        border-image: linear-gradient(90deg, var(--brand), var(--accent)) 1;
+        border-width: 1px;
+        border-style: solid;
+        box-shadow: var(--featuredGlow);
+        transform: translateY(-4px);
+      }
+      .ribbon {
+        position: absolute;
+        right: 16px;
+        top: 16px;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--brand), #72ffd3);
+        color: #071218;
+      }
+
+      .pkg ul {
+        margin: 12px 0 0;
+        padding-left: 20px;
+        color: #c7cfdd;
+      }
+      .pkg li {
+        margin: 6px 0;
+      }
+      .pkg .foot {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      /* FORM — refreshed styling */
+      form {
+        display: grid;
+        gap: 12px;
+      }
+      .field {
+        display: grid;
+        gap: 6px;
+      }
+      .label {
+        color: var(--muted);
+        font-size: 13px;
+        letter-spacing: 0.2px;
+      }
+      input,
+      textarea {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        background: var(--field);
+        border: 1px solid var(--field-b);
+        border-radius: 14px;
+        color: var(--ink);
+        padding: 14px 14px;
+        font-size: 16px; /* prevents iOS zoom */
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease,
+          background 0.2s ease;
+      }
+      input::placeholder,
+      textarea::placeholder {
+        color: #7f8aa0;
+      }
+      input:focus,
+      textarea:focus {
+        border-color: var(--field-focus);
+        box-shadow: 0 0 0 3px rgba(114, 255, 211, 0.15);
+        background: #111a2a;
+      }
+      textarea {
+        min-height: 140px;
+        resize: vertical;
+      }
+
+      h2 .material-icons {
+        font-size: 42px; /* make the icon bigger */
+        vertical-align: middle; /* align nicely with text */
+        margin-right: 10px; /* add spacing between icon and title */
+      }
+
+      /* Sticky Contact (mobile) */
+      .fab {
+        position: fixed;
+        right: 18px;
+        bottom: calc(18px + env(safe-area-inset-bottom));
+        z-index: 9500;
+        display: none;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        border-radius: 999px;
+        border: none;
+        background: linear-gradient(90deg, var(--brand), #72ffd3);
+        color: #071218;
+        font-weight: 700;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        touch-action: manipulation;
+        cursor: pointer;
+      }
+      .fab:focus {
+        outline: 2px solid #cfe9ff;
+        outline-offset: 2px;
+      }
+
+      /* FOOTER */
+      footer {
+        padding: 26px 0;
+        color: #7f8aa0;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 1024px) {
+        .cols-2 {
+          grid-template-columns: 1fr;
+          align-items: start;
+        }
+      }
+      @media (max-width: 880px) {
+        .menu {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
+        .hero {
+          padding: 48px 0 36px;
+        }
+        .cta {
+          gap: 10px;
+        }
+        .fab {
+          display: inline-flex;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .track {
+          transition: none;
+        }
+        .mobile-panel {
+          transition: none;
+        }
+        html {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="nav" role="navigation" aria-label="Primary">
+      <div class="wrap">
+        <div class="logo">BDIM</div>
+
+        <!-- Desktop menu (updated order + labels) -->
+        <div class="menu">
+          <a href="#intro">Overview</a>
+          <a href="#opportunity">Opportunity</a>
+          <a href="#how">Solution</a>
+          <a href="#why">Why Us</a>
+          <a href="#licensing">Licensing</a>
+          <a href="#support">Support</a>
+          <a href="#contact" style="display: none">Contact</a>
+        </div>
+
+        <!-- Hamburger -->
+        <button
+          class="hamburger"
+          id="hamburger"
+          type="button"
+          aria-label="Open menu"
+          aria-controls="mobileMenu"
+          aria-expanded="false"
+        >
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M4 7h16M4 12h16M4 17h16"
+              stroke="#dce6ff"
+              stroke-width="1.6"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile panel (updated order + labels) -->
+      <div class="mobile-panel" id="mobileMenu" aria-hidden="true">
+        <a href="#intro">Overview</a>
+        <a href="#opportunity">Opportunity</a>
+        <a href="#how">Solution</a>
+        <a href="#why">Why Us</a>
+        <a href="#licensing">Licensing</a>
+        <a href="#support">Support</a>
+        <a href="#contact" style="display: none">Contact</a>
+      </div>
+    </nav>
+
+    <!-- HERO / INTRO -->
+    <header id="intro" class="hero">
+      <div class="wrap">
+        <h1>Launch a Licensed In-Home Childcare Agency — Fast.</h1>
+        <p>
+          We empower entrepreneurs to build licensed In-Home Childcare Agencies
+          and open government-approved, revenue-generating childcare businesses
+          across Ontario with turnkey licensing, compliance, grants, and
+          training—built on 20+ years of hands-on expertise.
+        </p>
+
+        <div class="icon-row">
+          <span class="chip" title="Ontario-wide">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"
+                stroke="#5dd0ff"
+              />
+              <circle cx="12" cy="10" r="2.7" stroke="#9bff7a" />
+            </svg>
+            Ontario-wide license expansion
+          </span>
+          <span class="chip" title="Funding">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 7h16v10H4z" stroke="#5dd0ff" />
+              <path d="M8 12h8M8 9h8M8 15h5" stroke="#9bff7a" />
+            </svg>
+            CWELCC & municipal funding
+          </span>
+          <span class="chip" title="Scalable">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="M4 16h4V8H4v8zm6 4h4V4h-4v16zm6-8h4V6h-4v6z"
+                stroke="#5dd0ff"
+              />
+            </svg>
+            Multi-home scalability
+          </span>
+        </div>
+
+        <div class="badges">
+          <span class="badge">Ministry-aligned training</span>
+          <span class="badge">Grant & subsidy navigation</span>
+          <span class="badge">Scale across Ontario</span>
+        </div>
+        <div class="cta menu">
+          <a class="btn primary" href="#contact" style="display: none"
+            >Talk to Us</a
+          >
+          <a class="btn" href="#how">See Solution</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- OPPORTUNITY -->
+    <section id="opportunity">
+      <div class="wrap grid cols-2">
+        <div class="card">
+          <div class="kicker">Opportunity</div>
+          <h2>Demand is surging. Licensed supply lags.</h2>
+          <ul class="list">
+            <li>
+              Parents of infants & toddlers struggle to find safe, affordable,
+              licensed childcare in Ontario as demand outpaces supply.
+              <!-- Waitlists have swelled across Ontario as fees fall toward $10/day, -->
+              <!-- signaling demand far outpacing supply. -->
+            </li>
+            <li>
+              Unlicensed providers operate with limited oversight, may expose
+              families to added legal or safety risks, and often charge more
+              because they’re ineligible for public subsidies.
+            </li>
+            <!-- <li>
+              Unlicensed providers pose risks (safety, legal liability, lack of
+              subsidies).
+            </li> -->
+            <li>
+              Families of infants/toddlers favour smaller, home-based settings;
+              licensing unlocks subsidies and trust.
+            </li>
+
+            <li>
+              Ontario’s CWELCC agreement brings multi-year funding & expansion
+              targets—prime timing to build capacity.
+            </li>
+          </ul>
+        </div>
+        <div class="card" aria-hidden="true">
+          <svg
+            viewBox="0 0 520 300"
+            width="100%"
+            height="220"
+            style="display: block"
+          >
+            <defs>
+              <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#5dd0ff" />
+                <stop offset="1" stop-color="#9bff7a" />
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="520" height="300" fill="#0f1420" rx="16" />
+            <polyline
+              points="20,240 140,200 210,210 280,150 370,170 460,120"
+              fill="none"
+              stroke="url(#lg)"
+              stroke-width="6"
+            />
+            <circle cx="140" cy="200" r="6" fill="#5dd0ff" />
+            <circle cx="280" cy="150" r="6" fill="#9bff7a" />
+            <circle cx="460" cy="120" r="6" fill="#5dd0ff" />
+          </svg>
+          <p class="mini" style="margin-top: 8px">
+            Illustrative trendline: demand > supply → opportunity for licensed
+            home-based capacity.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW (formerly Product) -->
+    <section id="how">
+      <div class="wrap">
+        <!-- <div class="kicker">How</div> -->
+        <h2>Solution</h2>
+        <div
+          class="carousel"
+          aria-roledescription="carousel"
+          aria-label="How details"
+        >
+          <div class="track" id="track">
+            <article class="slide" aria-label="Product & Training">
+              <h2>
+                <span class="material-icons">school</span> Product & Training
+              </h2>
+              <ul class="list">
+                <li>
+                  Business setup packages to open a licensed in-home childcare
+                  agency.
+                </li>
+                <li>
+                  40+ hours of ministry-aligned training sessions for providers.
+                </li>
+
+                <li>
+                  Audit, finance, policy/procedure, and marketing training
+                  options for owners.
+                </li>
+                <li>Safety, compliance inspections, and ongoing coaching.</li>
+                <li>
+                  Built on 20+ years of operations and regulatory experience.
+                </li>
+              </ul>
+              <!-- <p class="mini">
+                Built on 20+ years of operations and regulatory experience.
+              </p> -->
+            </article>
+            <article class="slide" aria-label="Business Model">
+              <h2>
+                <span class="material-icons">business</span> Business Model
+              </h2>
+              <ul class="list">
+                <li>Agency ownership with multiple homes under one license.</li>
+                <li>
+                  Revenue from admin/registration fees, per-child subsidies,
+                  training & consulting.
+                </li>
+                <li>Scalable footprint across Ontario regions.</li>
+              </ul>
+            </article>
+            <article class="slide" aria-label="Traction">
+              <h2><span class="material-icons">trending_up</span> Traction</h2>
+              <ul class="list">
+                <li>
+                  Founder with 30+ years in child development, law, and business
+                  management.
+                </li>
+                <li>
+                  Operating history includes licensed childcare & an elementary
+                  school under Ontario MoE.
+                </li>
+                <li>Growing pipeline as demand surges post-CWELCC.</li>
+                <li>
+                  Marketing options by Inventive Minds to fascilitate market
+                  penetration.
+                </li>
+              </ul>
+            </article>
+            <article class="slide" aria-label="Go-to-Market">
+              <h2><span class="material-icons">campaign</span> Go-to-Market</h2>
+              <ul class="list">
+                <li>
+                  Target: aspiring entrepreneurs & childcare professionals
+                  seeking to expand their streams of revenue.
+                </li>
+                <li>
+                  Partnerships with immigration consultants (PR-supportive
+                  ownership paths).
+                </li>
+                <li>
+                  Regional expansion all across Ontario driven by
+                  government-identified demand zones.
+                </li>
+              </ul>
+            </article>
+            <article class="slide" aria-label="Competition">
+              <h2>
+                <span class="material-icons">emoji_events</span> Competitive
+                Edge
+              </h2>
+              <ul class="list">
+                <li>Lower startup cost vs. standalone centres.</li>
+                <li>Mobile license enables multi-region growth.</li>
+                <li>
+                  Access to grants/subsidies + ongoing compliance support.
+                </li>
+              </ul>
+            </article>
+          </div>
+          <div class="controls">
+            <button
+              class="control-btn"
+              id="prev"
+              type="button"
+              aria-label="Previous slide"
+            >
+              ◀
+            </button>
+            <div class="dots" id="dots" aria-hidden="true"></div>
+            <button
+              class="control-btn"
+              id="next"
+              type="button"
+              aria-label="Next slide"
+            >
+              ▶
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY US (moved here, right after HOW) -->
+    <section id="why">
+      <div class="wrap grid cols-2">
+        <div class="card">
+          <div class="kicker">Why Us</div>
+          <h2>Regulatory muscle + growth playbook.</h2>
+          <ul class="list">
+            <li>
+              We handle licensing & compliance so you can scale operations.
+            </li>
+            <li>Grant navigation and (optional) lead generation built-in.</li>
+            <li>
+              Proven team spanning licensing, financing, grants, and community
+              engagement.
+            </li>
+            <li>
+              A to Z training solutions for handling all aspects of in-home
+              care.
+            </li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="kicker">Team & Outlook</div>
+          <h2>Experienced leadership. Expansion roadmap.</h2>
+          <ul class="list">
+            <li>
+              <strong>Founder:</strong> Rose Morsh — 30+ years of experience
+              across child development, law, business & management.
+            </li>
+            <li>
+              Well-established network across the core industry and adjacent
+              sectors.
+            </li>
+            <li>
+              Partnerships with Ontario Ministry of Education & municipalities.
+            </li>
+            <li>
+              Illustrative growth path from launch → multi-home → province-wide
+              footprint.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- LICENSING PACKAGES -->
+    <section id="licensing">
+      <div class="wrap">
+        <!-- <div class="kicker">Licensing</div> -->
+        <h2 style="text-align: center">Licensing Packages</h2>
+        <div class="pkg-wrap">
+          <div class="pkg-row">
+            <div class="pkg">
+              <span class="pill">Normal</span>
+              <div class="price">$65,000</div>
+              <ul class="checklist">
+                <!-- <li>License processing may take up to 12 months.</li> -->
+                <li>Paid upfront.</li>
+                <li>No support services included.</li>
+                <li>No training services included.</li>
+                <li>Best for: investors who want the bare minimum setup.</li>
+              </ul>
+              <!-- <p class="foot">Details per the deck.</p> -->
+              <p class="foot">Processing may take up to 12 months.</p>
+            </div>
+
+            <div class="pkg featured">
+              <div class="ribbon">Recommended</div>
+              <span class="pill">Optimal</span>
+              <div class="price">$85,000</div>
+              <ul class="checklist">
+                <li>
+                  Payable in 3 instalments:
+                  <ul>
+                    <li class="mini">$20,000 (start)</li>
+                    <li class="mini">$40,000 (month 3)</li>
+                    <li class="mini">$25,000 (on delivery)</li>
+                  </ul>
+                </li>
+                <li>
+                  Included training bonuses ($7,800 value):
+                  <ul>
+                    <li class="mini">
+                      Policy &amp; Procedure — 120 hrs ($4,200)
+                    </li>
+                    <li class="mini">Marketing — 80 hrs ($2,800)</li>
+                    <li class="mini">Provider — 40 hrs ($800, group)</li>
+                  </ul>
+                </li>
+                <!-- <li>Processing may take up to 12 months.</li> -->
+                <li>
+                  Best for: investors seeking the best balance of cost and
+                  long-term value.
+                </li>
+              </ul>
+              <!-- <p class="foot">Designed to drive most conversions.</p> -->
+              <p class="foot">Processing may take up to 12 months.</p>
+            </div>
+
+            <div class="pkg">
+              <span class="pill">Regal</span>
+              <div class="price">$115,000</div>
+              <ul class="checklist">
+                <li>Instant license → launch & start operating immediately.</li>
+
+                <li>
+                  Included training bonuses ($11,000 value):
+                  <ul>
+                    <li class="mini">Audit — 40 hrs ($1,600)</li>
+                    <li class="mini">Finance — 40 hrs ($1,600)</li>
+                    <li class="mini">
+                      Policy &amp; Procedure — 120 hrs ($4,200)
+                    </li>
+                    <li class="mini">Marketing — 80 hrs ($2,800)</li>
+                    <li class="mini">
+                      Provider — 40 hrs ($800/provider, group)
+                    </li>
+                  </ul>
+                </li>
+                <li>Best for: speed-to-market, turnkey launch.</li>
+              </ul>
+              <!-- <p class="foot">Premium speed &amp; inclusions.</p> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUPPORT PACKAGES -->
+    <section id="support">
+      <div class="wrap">
+        <!-- <div class="kicker">Support</div> -->
+        <h2 style="text-align: center">Support &amp; Training Packages</h2>
+        <div class="pkg-wrap">
+          <div class="pkg-row">
+            <div class="pkg">
+              <span class="pill">Flex</span>
+              <div class="price">
+                $800+ <span class="mini">(selectable)</span>
+              </div>
+              <ul class="checklist">
+                <li>
+                  Owner training options:
+                  <ul>
+                    <li class="mini">Audit — 40 hrs ($1,600)</li>
+                    <li class="mini">Finance — 40 hrs ($1,600)</li>
+                    <li class="mini">
+                      Policy &amp; Procedure — 120 hrs ($4,200)
+                    </li>
+                    <li class="mini">Marketing — 80 hrs ($2,800)</li>
+                  </ul>
+                </li>
+                <li>Provider group training — 40 hrs ($800/provider)</li>
+                <li>Best for: owners who want only specific add-ons.</li>
+              </ul>
+            </div>
+
+            <div class="pkg featured">
+              <div class="ribbon">Best Value</div>
+              <span class="pill">Max</span>
+              <div class="price">$9,000</div>
+              <ul class="checklist">
+                <li>
+                  All Flex training options bundled at a discount.
+                  <ul>
+                    <li class="mini">
+                      Combined value of $11,000 → bundled at $9,000.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  Training includes:
+                  <ul>
+                    <li class="mini">Audit (40 hrs)</li>
+                    <li class="mini">Finance (40 hrs)</li>
+                    <li class="mini">Policy &amp; Procedure (120 hrs)</li>
+                    <li class="mini">Marketing (80 hrs)</li>
+                    <li class="mini">Provider (40 hrs, group)</li>
+                  </ul>
+                </li>
+                <li>
+                  Best for: owners who want a complete training solution at
+                  better value.
+                </li>
+              </ul>
+            </div>
+
+            <div class="pkg">
+              <span class="pill">Apex</span>
+              <div class="price">$20,000</div>
+              <ul class="checklist">
+                <li>5 monthly instalments of $4,000.</li>
+
+                <li>
+                  6 months of professional marketing by Inventive Minds (≈
+                  $24,000+ value):
+                  <ul>
+                    <li class="mini">Recruit an in-home provider</li>
+                    <li class="mini">Child enrollment campaigns</li>
+                  </ul>
+                </li>
+                <li>
+                  Free provider training included.
+                  <ul>
+                    <li class="mini">
+                      NOTE: Requires completion of Inventive Minds training to
+                      use marketing services.
+                    </li>
+                  </ul>
+                </li>
+
+                <li>Best for: those who want marketing done for them.</li>
+              </ul>
+              <!-- <p class="foot">(5 instalments of $5,000)</p> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section
+      id="contact"
+      style="border: solid red; display: none"
+      class="hidden"
+    >
+      <div class="wrap grid cols-2">
+        <div class="card">
+          <div class="kicker">Get in Touch</div>
+          <h2>Let’s build capacity—together.</h2>
+          <p>
+            We’re onboarding entrepreneurs and partners to expand licensed
+            home-based childcare across Ontario.
+          </p>
+          <ul class="list">
+            <li>
+              Goal: become Canada’s leading provider of licensed in-home
+              childcare agencies.
+            </li>
+          </ul>
+          <div class="icon-row">
+            <span class="chip"
+              ><svg viewBox="0 0 24 24" fill="none">
+                <path d="M3 7h18v10H3z" stroke="#5dd0ff" />
+                <path d="M3 7l9 7 9-7" stroke="#9bff7a" /></svg
+              >info@bdims.ca</span
+            >
+            <span class="chip"
+              ><svg viewBox="0 0 24 24" fill="none">
+                <path d="M6 3h12v18H6z" stroke="#5dd0ff" />
+                <path d="M8 5h8M8 9h8M8 13h8" stroke="#9bff7a" />
+              </svg>
+              Download deck & details</span
+            >
+          </div>
+        </div>
+        <div class="card">
+          <form onsubmit="handleSubmit(event)">
+            <div class="field">
+              <label class="label" for="name">Your Name</label>
+              <input
+                id="name"
+                required
+                name="name"
+                autocomplete="name"
+                placeholder="Jane Doe"
+              />
+            </div>
+            <div class="field">
+              <label class="label" for="email">Email</label>
+              <input
+                id="email"
+                required
+                type="email"
+                name="email"
+                autocomplete="email"
+                placeholder="you@company.com"
+              />
+            </div>
+            <div class="field">
+              <label class="label" for="message">Message</label>
+              <textarea
+                id="message"
+                required
+                name="message"
+                placeholder="Tell us about your goals"
+              ></textarea>
+            </div>
+            <button class="btn primary" type="submit">Submit</button>
+            <p class="mini" id="formMsg" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <small
+          >© <span id="year"></span> BMIS · Licensed In-Home Childcare
+          Agencies</small
+        >
+      </div>
+    </footer>
+
+    <!-- Sticky Contact FAB (mobile) -->
+    <a
+      href="#contact"
+      class="fab"
+      id="fab"
+      aria-label="Contact us"
+      style="display: none"
+      >Contact</a
+    >
+
+    <script>
+      /* =====================================
+     Smooth scroll + active menu highlighting
+     ===================================== */
+      function smoothTo(hash) {
+        const el = document.querySelector(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+      const desktopLinks = document.querySelectorAll(".menu a");
+      desktopLinks.forEach((a) => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          smoothTo(a.getAttribute("href"));
+        });
+      });
+
+      const sections = [...document.querySelectorAll("header[id],section[id]")];
+      const setActive = (hash) => {
+        desktopLinks.forEach((x) => x.classList.remove("active"));
+        const l = document.querySelector(`.menu a[href="${hash}"]`);
+        if (l) l.classList.add("active");
+      };
+
+      window.addEventListener("load", () => {
+        if (window.scrollY <= 2) setActive("#intro");
+      });
+
+      const obs = new IntersectionObserver(
+        (entries) => {
+          if (window.scrollY <= 2) return;
+          let best = null;
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            if (!best || e.intersectionRatio > best.intersectionRatio) best = e;
+          }
+          if (best) {
+            setActive(`#${best.target.id}`);
+          }
+        },
+        { threshold: [0.25, 0.5, 0.75], rootMargin: "-30% 0px -40% 0px" }
+      );
+      sections.forEach((el) => obs.observe(el));
+
+      /* =========================
+     Hamburger / mobile panel
+     ========================= */
+      const burger = document.getElementById("hamburger");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const mobileLinks = mobileMenu.querySelectorAll("a");
+
+      function openMenu() {
+        burger.setAttribute("aria-expanded", "true");
+        burger.setAttribute("aria-label", "Close menu");
+        mobileMenu.style.display = "block";
+        requestAnimationFrame(() => mobileMenu.classList.add("open"));
+        mobileMenu.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      }
+      function closeMenu() {
+        burger.setAttribute("aria-expanded", "false");
+        burger.setAttribute("aria-label", "Open menu");
+        mobileMenu.classList.remove("open");
+        mobileMenu.setAttribute("aria-hidden", "true");
+        mobileMenu.addEventListener("transitionend", function handler() {
+          mobileMenu.style.display = "none";
+          mobileMenu.removeEventListener("transitionend", handler);
+        });
+        document.body.style.overflow = "";
+      }
+      burger.addEventListener("click", () => {
+        const isOpen = burger.getAttribute("aria-expanded") === "true";
+        isOpen ? closeMenu() : openMenu();
+      });
+      window.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          burger.getAttribute("aria-expanded") === "true"
+        )
+          closeMenu();
+      });
+      mobileLinks.forEach((a) =>
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          closeMenu();
+          smoothTo(a.getAttribute("href"));
+        })
+      );
+      document.addEventListener("click", (e) => {
+        if (burger.getAttribute("aria-expanded") !== "true") return;
+        const withinNav = e.target.closest(".nav");
+        if (!withinNav) {
+          closeMenu();
+        }
+      });
+
+      /* =========================
+     Carousel (touch + mouse)
+     ========================= */
+      const track = document.getElementById("track");
+      const slides = [...track.children];
+      const dotsEl = document.getElementById("dots");
+      const prev = document.getElementById("prev");
+      const next = document.getElementById("next");
+      let index = 0;
+
+      function renderDots() {
+        dotsEl.innerHTML = "";
+        slides.forEach((_, i) => {
+          const d = document.createElement("button");
+          d.type = "button";
+          d.className = "dot" + (i === index ? " active" : "");
+          d.setAttribute("aria-label", `Go to slide ${i + 1}`);
+          d.addEventListener("click", () => go(i));
+          dotsEl.appendChild(d);
+        });
+      }
+      function go(i) {
+        index = (i + slides.length) % slides.length;
+        track.style.transform = `translateX(-${index * 100}%)`;
+        renderDots();
+      }
+      prev.addEventListener("click", () => go(index - 1));
+      next.addEventListener("click", () => go(index + 1));
+
+      // Touch swipe
+      let startX = null,
+        swiping = false;
+      track.addEventListener(
+        "touchstart",
+        (e) => {
+          if (e.touches.length !== 1) return;
+          swiping = true;
+          startX = e.touches[0].clientX;
+        },
+        { passive: true }
+      );
+      track.addEventListener(
+        "touchend",
+        (e) => {
+          if (!swiping) return;
+          swiping = false;
+          const t =
+            e.changedTouches && e.changedTouches[0]
+              ? e.changedTouches[0]
+              : null;
+          if (!t) return;
+          const dx = t.clientX - startX;
+          if (Math.abs(dx) > 40) {
+            dx > 0 ? go(index - 1) : go(index + 1);
+          }
+        },
+        { passive: true }
+      );
+
+      // Mouse drag
+      let down = false,
+        downX = 0;
+      track.addEventListener("mousedown", (e) => {
+        down = true;
+        downX = e.clientX;
+        e.preventDefault();
+      });
+      window.addEventListener("mouseup", (e) => {
+        if (!down) return;
+        down = false;
+        const dx = e.clientX - downX;
+        if (Math.abs(dx) > 40) {
+          dx > 0 ? go(index - 1) : go(index + 1);
+        }
+      });
+
+      renderDots();
+
+      /* =========================
+     Sticky FAB
+     ========================= */
+      const fab = document.getElementById("fab");
+      fab.addEventListener("click", (e) => {
+        e.preventDefault();
+        smoothTo("#contact");
+        fab.blur();
+      });
+
+      /* =========================
+     Contact form (mailto)
+     ========================= */
+      function handleSubmit(e) {
+        e.preventDefault();
+        const data = new FormData(e.target);
+        const subject = encodeURIComponent("Agency Inquiry");
+        const body = encodeURIComponent(
+          `Name: ${data.get("name")}\nEmail: ${data.get("email")}\n\n${data.get(
+            "message"
+          )}`
+        );
+        const mailto = `mailto:hello@inventiveminds.ca?subject=${subject}&body=${body}`;
+        document.getElementById("formMsg").textContent =
+          "Opening your email client…";
+        window.location.href = mailto;
+      }
+
+      // Year
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
+    <!-- Gradient defs for logo -->
+    <svg width="0" height="0" style="position: absolute">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="24" y2="24">
+          <stop stop-color="#5dd0ff" />
+          <stop offset="1" stop-color="#9bff7a" />
+        </linearGradient>
+      </defs>
+    </svg>
+  </body>
+</html>
